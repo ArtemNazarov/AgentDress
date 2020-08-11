@@ -350,3 +350,12 @@ MigrationBackup/
 .ionide/
 
 node_modules/
+
+# JetBrains IDEa files
+.idea/
+
+# Visual Studio Code files
+.vscode/
+
+# Visual Studio files
+.vs/
