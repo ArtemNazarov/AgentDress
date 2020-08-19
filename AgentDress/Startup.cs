@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+
 namespace AgentDressReborn
 {
     public class Startup
@@ -34,7 +35,8 @@ namespace AgentDressReborn
                         .AllowAnyHeader();
                 })
             );
-            services.AddDbContext<DressContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AgentDress")));
+            // services.AddDbContext<DressContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AgentDress")));
+            services.AddDbContext<DressContext>(options => options.UseNpgsql(Configuration.GetConnectionString("AgentDresspg")));
             services.AddControllers();
         }
 

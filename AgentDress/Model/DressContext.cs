@@ -30,11 +30,16 @@ namespace AgentDressReborn.Model
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AgentDress;Trusted_Connection=True;");
+            if (!optionsBuilder.IsConfigured)
+            {
+                throw new Exception("В DressContext отсутствует строка подключения.");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            modelBuilder.HasDefaultSchema("public");
 
             modelBuilder.Entity<DressCollection>().HasMany(e => e.Dresses);
 

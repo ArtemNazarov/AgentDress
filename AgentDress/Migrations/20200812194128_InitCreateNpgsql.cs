@@ -1,17 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace AgentDressReborn.Migrations
+namespace AgentDress.Migrations
 {
-    public partial class InitCreate : Migration
+    public partial class InitCreateNpgsql : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "public");
+
             migrationBuilder.CreateTable(
                 name: "Categories",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DressCategory = table.Column<string>(nullable: true),
                     Age = table.Column<string>(nullable: true)
                 },
@@ -22,10 +27,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DressTypes",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -35,10 +41,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Manufacturers",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Bik = table.Column<string>(nullable: true),
@@ -53,10 +60,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Dresses",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Price = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
@@ -71,18 +79,21 @@ namespace AgentDressReborn.Migrations
                     table.ForeignKey(
                         name: "FK_Dresses_Categories_CategoryId",
                         column: x => x.CategoryId,
+                        principalSchema: "public",
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Dresses_DressTypes_DressTypeId",
                         column: x => x.DressTypeId,
+                        principalSchema: "public",
                         principalTable: "DressTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Dresses_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
+                        principalSchema: "public",
                         principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -90,10 +101,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Colors",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     sColor = table.Column<string>(nullable: true),
                     Opacity = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
@@ -106,6 +118,7 @@ namespace AgentDressReborn.Migrations
                     table.ForeignKey(
                         name: "FK_Colors_Dresses_DressId",
                         column: x => x.DressId,
+                        principalSchema: "public",
                         principalTable: "Dresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -113,10 +126,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DressCollections",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: true),
                     DressId = table.Column<int>(nullable: true)
                 },
@@ -126,6 +140,7 @@ namespace AgentDressReborn.Migrations
                     table.ForeignKey(
                         name: "FK_DressCollections_Dresses_DressId",
                         column: x => x.DressId,
+                        principalSchema: "public",
                         principalTable: "Dresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -133,10 +148,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Sizes",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     sSize = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
@@ -148,6 +164,7 @@ namespace AgentDressReborn.Migrations
                     table.ForeignKey(
                         name: "FK_Sizes_Dresses_DressId",
                         column: x => x.DressId,
+                        principalSchema: "public",
                         principalTable: "Dresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -155,10 +172,11 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Stores",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -176,6 +194,7 @@ namespace AgentDressReborn.Migrations
                     table.ForeignKey(
                         name: "FK_Stores_Dresses_DressId",
                         column: x => x.DressId,
+                        principalSchema: "public",
                         principalTable: "Dresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -183,61 +202,74 @@ namespace AgentDressReborn.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Colors_DressId",
+                schema: "public",
                 table: "Colors",
                 column: "DressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DressCollections_DressId",
+                schema: "public",
                 table: "DressCollections",
                 column: "DressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dresses_CategoryId",
+                schema: "public",
                 table: "Dresses",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dresses_DressCollectionId",
+                schema: "public",
                 table: "Dresses",
                 column: "DressCollectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dresses_DressTypeId",
+                schema: "public",
                 table: "Dresses",
                 column: "DressTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dresses_ManufacturerId",
+                schema: "public",
                 table: "Dresses",
                 column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dresses_StoreId",
+                schema: "public",
                 table: "Dresses",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sizes_DressId",
+                schema: "public",
                 table: "Sizes",
                 column: "DressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stores_DressId",
+                schema: "public",
                 table: "Stores",
                 column: "DressId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Dresses_DressCollections_DressCollectionId",
+                schema: "public",
                 table: "Dresses",
                 column: "DressCollectionId",
+                principalSchema: "public",
                 principalTable: "DressCollections",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Dresses_Stores_StoreId",
+                schema: "public",
                 table: "Dresses",
                 column: "StoreId",
+                principalSchema: "public",
                 principalTable: "Stores",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
@@ -247,35 +279,45 @@ namespace AgentDressReborn.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_DressCollections_Dresses_DressId",
+                schema: "public",
                 table: "DressCollections");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Stores_Dresses_DressId",
+                schema: "public",
                 table: "Stores");
 
             migrationBuilder.DropTable(
-                name: "Colors");
+                name: "Colors",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Sizes");
+                name: "Sizes",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Dresses");
+                name: "Dresses",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Categories",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "DressCollections");
+                name: "DressCollections",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "DressTypes");
+                name: "DressTypes",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Manufacturers");
+                name: "Manufacturers",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Stores");
+                name: "Stores",
+                schema: "public");
         }
     }
 }
